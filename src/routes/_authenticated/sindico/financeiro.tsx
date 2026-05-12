@@ -88,6 +88,22 @@ function Page() {
         </div>
       </div>
 
+      <section className="bg-card rounded-3xl p-5 shadow-soft space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Conciliação</div>
+            <div className="text-2xl font-extrabold mt-1">{brl(total)}</div>
+            <div className="text-[11px] text-muted-foreground">{totalKwh.toFixed(1)} kWh vendidos · {data.filter((t: any) => t.status_pagamento === "pago").length} transações</div>
+          </div>
+          <Banknote className="text-success" size={28} />
+        </div>
+        <button onClick={transferToCondo} disabled={transferring || total <= 0}
+          className="w-full h-12 rounded-2xl bg-success text-success-foreground font-semibold inline-flex items-center justify-center gap-2 disabled:opacity-50">
+          {transferring ? <Loader2 className="animate-spin" size={16} /> : <Banknote size={16} />}
+          Transferir para conta do condomínio
+        </button>
+      </section>
+
       <button onClick={exportCsv} className="w-full h-12 rounded-2xl bg-card font-semibold inline-flex items-center justify-center gap-2 shadow-soft">
         <Download size={16} /> Exportar CSV
       </button>
