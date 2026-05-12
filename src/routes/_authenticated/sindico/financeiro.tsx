@@ -60,6 +60,22 @@ function Page() {
     toast.success("CSV exportado");
   };
 
+  const totalKwh = data.filter((t: any) => t.status_pagamento === "pago").reduce((s: number, t: any) => s + Number(t.valor_energia) / 0.95, 0);
+
+  const transferToCondo = async () => {
+    if (!condoId || total <= 0) { toast.error("Sem saldo a transferir"); return; }
+    setTransferring(true);
+    const { error } = await supabase.from("repasses").insert({
+      condominio_id: condoId,
+      valor: total,
+      observacao: `Repasse referente a ${period === "week" ? "semana" : period === "month" ? "mês" : "ano"} corrente`,
+      solicitado_por: perfil?.id,
+    } as any);
+    setTransferring(false);
+    if (error) return toast.error(error.message);
+    toast.success("Solicitação de repasse criada");
+  };
+
   return (
     <div className="px-5 pt-8 pb-6 space-y-5">
       <h1 className="text-2xl font-extrabold tracking-tight">Financeiro</h1>
