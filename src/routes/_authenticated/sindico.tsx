@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { LayoutDashboard, Plug, Users, CalendarDays, BarChart3, UserCheck, Settings } from "lucide-react";
+import { LayoutDashboard, Plug, Users, CalendarDays, BarChart3, UserCheck, Settings, Shield } from "lucide-react";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { MobileFrame } from "@/components/MobileFrame";
 import { BottomNav } from "@/components/BottomNav";
@@ -42,6 +42,9 @@ function SindicoLayout() {
       <header className="flex items-center justify-between px-5 pt-5 pb-1">
         <span className="text-xs font-bold uppercase tracking-wider text-primary">Síndico</span>
         <div className="flex items-center gap-2">
+          <Link to="/sindico/compliance" className="h-10 w-10 rounded-full bg-card shadow-soft grid place-items-center" aria-label="Conformidade">
+            <Shield size={18} />
+          </Link>
           <Link to="/sindico/configuracoes" className="h-10 w-10 rounded-full bg-card shadow-soft grid place-items-center" aria-label="Configurações">
             <Settings size={18} />
           </Link>

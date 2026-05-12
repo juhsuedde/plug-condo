@@ -1,9 +1,11 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { Home, CalendarPlus, ClipboardList, ListOrdered, User, Clock, XCircle, LogOut } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Home, CalendarPlus, ClipboardList, ListOrdered, User, Clock, XCircle, LogOut, Construction } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
 import { BottomNav } from "@/components/BottomNav";
 import { NotificationsBell } from "@/components/NotificationsBell";
+import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/morador")({
@@ -13,11 +15,43 @@ export const Route = createFileRoute("/_authenticated/morador")({
 function MoradorLayout() {
   const { perfil, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const condoId = perfil?.condominio_id;
+
+  const { data: condo } = useQuery({
+    queryKey: ["condo-onboarding", condoId],
+    enabled: !!condoId,
+    queryFn: async () => (await supabase.from("condominios").select("onboarding_completo,nome").eq("id", condoId!).single()).data,
+  });
+
   useEffect(() => {
     if (!loading && perfil && perfil.role !== "morador") {
       navigate({ to: "/sindico/dashboard" });
     }
   }, [loading, perfil, navigate]);
+
+  const condoNotReady = perfil?.role === "morador" && condo && !(condo as any).onboarding_completo;
+
+  if (condoNotReady) {
+    return (
+      <MobileFrame>
+        <div className="flex-1 grid place-items-center px-6 text-center">
+          <div className="space-y-5 max-w-[300px]">
+            <div className="h-20 w-20 mx-auto rounded-full grid place-items-center bg-warning/15 text-warning">
+              <Construction size={40} />
+            </div>
+            <h1 className="text-xl font-extrabold">Em preparação</h1>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              O síndico ainda está configurando os carregadores do condomínio. Você será notificado assim que o app for liberado.
+            </p>
+            <button onClick={async () => { await signOut(); navigate({ to: "/" }); }}
+              className="inline-flex items-center gap-2 h-11 px-5 rounded-2xl bg-card shadow-soft text-sm font-semibold">
+              <LogOut size={16} /> Sair
+            </button>
+          </div>
+        </div>
+      </MobileFrame>
+    );
+  }
 
   if (perfil && perfil.role === "morador" && perfil.status_aprovacao !== "aprovado") {
     const rejected = perfil.status_aprovacao === "rejeitado";

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { format, parseISO, startOfWeek, startOfMonth, startOfYear } from "date-fns";
-import { Download } from "lucide-react";
+import { Download, Banknote, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/_authenticated/sindico/financeiro")({
 function Page() {
   const { perfil } = useAuth();
   const [period, setPeriod] = useState<Period>("month");
+  const [transferring, setTransferring] = useState(false);
   const condoId = perfil?.condominio_id;
 
   const start = useMemo(() => {
@@ -59,6 +60,22 @@ function Page() {
     toast.success("CSV exportado");
   };
 
+  const totalKwh = data.filter((t: any) => t.status_pagamento === "pago").reduce((s: number, t: any) => s + Number(t.valor_energia) / 0.95, 0);
+
+  const transferToCondo = async () => {
+    if (!condoId || total <= 0) { toast.error("Sem saldo a transferir"); return; }
+    setTransferring(true);
+    const { error } = await supabase.from("repasses").insert({
+      condominio_id: condoId,
+      valor: total,
+      observacao: `Repasse referente a ${period === "week" ? "semana" : period === "month" ? "mês" : "ano"} corrente`,
+      solicitado_por: perfil?.id,
+    } as any);
+    setTransferring(false);
+    if (error) return toast.error(error.message);
+    toast.success("Solicitação de repasse criada");
+  };
+
   return (
     <div className="px-5 pt-8 pb-6 space-y-5">
       <h1 className="text-2xl font-extrabold tracking-tight">Financeiro</h1>
@@ -86,6 +103,22 @@ function Page() {
           </div>
         </div>
       </div>
+
+      <section className="bg-card rounded-3xl p-5 shadow-soft space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Conciliação</div>
+            <div className="text-2xl font-extrabold mt-1">{brl(total)}</div>
+            <div className="text-[11px] text-muted-foreground">{totalKwh.toFixed(1)} kWh vendidos · {data.filter((t: any) => t.status_pagamento === "pago").length} transações</div>
+          </div>
+          <Banknote className="text-success" size={28} />
+        </div>
+        <button onClick={transferToCondo} disabled={transferring || total <= 0}
+          className="w-full h-12 rounded-2xl bg-success text-success-foreground font-semibold inline-flex items-center justify-center gap-2 disabled:opacity-50">
+          {transferring ? <Loader2 className="animate-spin" size={16} /> : <Banknote size={16} />}
+          Transferir para conta do condomínio
+        </button>
+      </section>
 
       <button onClick={exportCsv} className="w-full h-12 rounded-2xl bg-card font-semibold inline-flex items-center justify-center gap-2 shadow-soft">
         <Download size={16} /> Exportar CSV

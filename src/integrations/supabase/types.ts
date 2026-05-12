@@ -20,27 +20,36 @@ export type Database = {
           created_at: string
           id: string
           localizacao: string
+          morador_id: string | null
           nome: string
           potencia_kw: number
           status: Database["public"]["Enums"]["charger_status"]
+          tipo: Database["public"]["Enums"]["spot_type"]
+          tipo_cobranca: Database["public"]["Enums"]["charge_billing"]
         }
         Insert: {
           condominio_id: string
           created_at?: string
           id?: string
           localizacao: string
+          morador_id?: string | null
           nome: string
           potencia_kw?: number
           status?: Database["public"]["Enums"]["charger_status"]
+          tipo?: Database["public"]["Enums"]["spot_type"]
+          tipo_cobranca?: Database["public"]["Enums"]["charge_billing"]
         }
         Update: {
           condominio_id?: string
           created_at?: string
           id?: string
           localizacao?: string
+          morador_id?: string | null
           nome?: string
           potencia_kw?: number
           status?: Database["public"]["Enums"]["charger_status"]
+          tipo?: Database["public"]["Enums"]["spot_type"]
+          tipo_cobranca?: Database["public"]["Enums"]["charge_billing"]
         }
         Relationships: [
           {
@@ -55,7 +64,9 @@ export type Database = {
       condominios: {
         Row: {
           cnpj: string | null
+          compliance: Json
           created_at: string
+          demanda_contratada_kw: number
           duracao_padrao_horas: number
           endereco: string
           horario_fim: string
@@ -63,13 +74,16 @@ export type Database = {
           id: string
           limite_reservas_futuras: number
           nome: string
+          onboarding_completo: boolean
           preco_kwh: number
           qtd_unidades: number
           taxa_uso: number
         }
         Insert: {
           cnpj?: string | null
+          compliance?: Json
           created_at?: string
+          demanda_contratada_kw?: number
           duracao_padrao_horas?: number
           endereco: string
           horario_fim?: string
@@ -77,13 +91,16 @@ export type Database = {
           id?: string
           limite_reservas_futuras?: number
           nome: string
+          onboarding_completo?: boolean
           preco_kwh?: number
           qtd_unidades?: number
           taxa_uso?: number
         }
         Update: {
           cnpj?: string | null
+          compliance?: Json
           created_at?: string
+          demanda_contratada_kw?: number
           duracao_padrao_horas?: number
           endereco?: string
           horario_fim?: string
@@ -91,6 +108,7 @@ export type Database = {
           id?: string
           limite_reservas_futuras?: number
           nome?: string
+          onboarding_completo?: boolean
           preco_kwh?: number
           qtd_unidades?: number
           taxa_uso?: number
@@ -243,6 +261,36 @@ export type Database = {
           },
         ]
       }
+      repasses: {
+        Row: {
+          condominio_id: string
+          created_at: string
+          id: string
+          observacao: string | null
+          solicitado_por: string | null
+          status: string
+          valor: number
+        }
+        Insert: {
+          condominio_id: string
+          created_at?: string
+          id?: string
+          observacao?: string | null
+          solicitado_por?: string | null
+          status?: string
+          valor: number
+        }
+        Update: {
+          condominio_id?: string
+          created_at?: string
+          id?: string
+          observacao?: string | null
+          solicitado_por?: string | null
+          status?: string
+          valor?: number
+        }
+        Relationships: []
+      }
       reservas: {
         Row: {
           carregador_id: string
@@ -366,9 +414,11 @@ export type Database = {
     }
     Enums: {
       approval_status: "pendente" | "aprovado" | "rejeitado"
+      charge_billing: "kwh" | "hora"
       charger_status: "disponivel" | "ocupado" | "manutencao"
       payment_status: "pendente" | "pago" | "reembolsado" | "cancelado"
       reservation_status: "agendada" | "ativa" | "concluida" | "cancelada"
+      spot_type: "compartilhado" | "privativo"
       user_role: "morador" | "sindico"
     }
     CompositeTypes: {
@@ -498,9 +548,11 @@ export const Constants = {
   public: {
     Enums: {
       approval_status: ["pendente", "aprovado", "rejeitado"],
+      charge_billing: ["kwh", "hora"],
       charger_status: ["disponivel", "ocupado", "manutencao"],
       payment_status: ["pendente", "pago", "reembolsado", "cancelado"],
       reservation_status: ["agendada", "ativa", "concluida", "cancelada"],
+      spot_type: ["compartilhado", "privativo"],
       user_role: ["morador", "sindico"],
     },
   },
