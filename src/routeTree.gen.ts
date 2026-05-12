@@ -18,10 +18,13 @@ import { Route as AuthenticatedPendenteRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedNotificacoesRouteImport } from './routes/_authenticated/notificacoes'
 import { Route as AuthenticatedMoradorRouteImport } from './routes/_authenticated/morador'
 import { Route as AuthenticatedSindicoReservasRouteImport } from './routes/_authenticated/sindico/reservas'
+import { Route as AuthenticatedSindicoOnboardingRouteImport } from './routes/_authenticated/sindico/onboarding'
 import { Route as AuthenticatedSindicoMoradoresRouteImport } from './routes/_authenticated/sindico/moradores'
 import { Route as AuthenticatedSindicoFinanceiroRouteImport } from './routes/_authenticated/sindico/financeiro'
+import { Route as AuthenticatedSindicoEnergiaRouteImport } from './routes/_authenticated/sindico/energia'
 import { Route as AuthenticatedSindicoDashboardRouteImport } from './routes/_authenticated/sindico/dashboard'
 import { Route as AuthenticatedSindicoConfiguracoesRouteImport } from './routes/_authenticated/sindico/configuracoes'
+import { Route as AuthenticatedSindicoComplianceRouteImport } from './routes/_authenticated/sindico/compliance'
 import { Route as AuthenticatedSindicoCarregadoresRouteImport } from './routes/_authenticated/sindico/carregadores'
 import { Route as AuthenticatedMoradorReservasRouteImport } from './routes/_authenticated/morador/reservas'
 import { Route as AuthenticatedMoradorReservarRouteImport } from './routes/_authenticated/morador/reservar'
@@ -75,6 +78,12 @@ const AuthenticatedSindicoReservasRoute =
     path: '/reservas',
     getParentRoute: () => AuthenticatedSindicoRoute,
   } as any)
+const AuthenticatedSindicoOnboardingRoute =
+  AuthenticatedSindicoOnboardingRouteImport.update({
+    id: '/onboarding',
+    path: '/onboarding',
+    getParentRoute: () => AuthenticatedSindicoRoute,
+  } as any)
 const AuthenticatedSindicoMoradoresRoute =
   AuthenticatedSindicoMoradoresRouteImport.update({
     id: '/moradores',
@@ -87,6 +96,12 @@ const AuthenticatedSindicoFinanceiroRoute =
     path: '/financeiro',
     getParentRoute: () => AuthenticatedSindicoRoute,
   } as any)
+const AuthenticatedSindicoEnergiaRoute =
+  AuthenticatedSindicoEnergiaRouteImport.update({
+    id: '/energia',
+    path: '/energia',
+    getParentRoute: () => AuthenticatedSindicoRoute,
+  } as any)
 const AuthenticatedSindicoDashboardRoute =
   AuthenticatedSindicoDashboardRouteImport.update({
     id: '/dashboard',
@@ -97,6 +112,12 @@ const AuthenticatedSindicoConfiguracoesRoute =
   AuthenticatedSindicoConfiguracoesRouteImport.update({
     id: '/configuracoes',
     path: '/configuracoes',
+    getParentRoute: () => AuthenticatedSindicoRoute,
+  } as any)
+const AuthenticatedSindicoComplianceRoute =
+  AuthenticatedSindicoComplianceRouteImport.update({
+    id: '/compliance',
+    path: '/compliance',
     getParentRoute: () => AuthenticatedSindicoRoute,
   } as any)
 const AuthenticatedSindicoCarregadoresRoute =
@@ -150,10 +171,13 @@ export interface FileRoutesByFullPath {
   '/morador/reservar': typeof AuthenticatedMoradorReservarRoute
   '/morador/reservas': typeof AuthenticatedMoradorReservasRoute
   '/sindico/carregadores': typeof AuthenticatedSindicoCarregadoresRoute
+  '/sindico/compliance': typeof AuthenticatedSindicoComplianceRoute
   '/sindico/configuracoes': typeof AuthenticatedSindicoConfiguracoesRoute
   '/sindico/dashboard': typeof AuthenticatedSindicoDashboardRoute
+  '/sindico/energia': typeof AuthenticatedSindicoEnergiaRoute
   '/sindico/financeiro': typeof AuthenticatedSindicoFinanceiroRoute
   '/sindico/moradores': typeof AuthenticatedSindicoMoradoresRoute
+  '/sindico/onboarding': typeof AuthenticatedSindicoOnboardingRoute
   '/sindico/reservas': typeof AuthenticatedSindicoReservasRoute
 }
 export interface FileRoutesByTo {
@@ -170,10 +194,13 @@ export interface FileRoutesByTo {
   '/morador/reservar': typeof AuthenticatedMoradorReservarRoute
   '/morador/reservas': typeof AuthenticatedMoradorReservasRoute
   '/sindico/carregadores': typeof AuthenticatedSindicoCarregadoresRoute
+  '/sindico/compliance': typeof AuthenticatedSindicoComplianceRoute
   '/sindico/configuracoes': typeof AuthenticatedSindicoConfiguracoesRoute
   '/sindico/dashboard': typeof AuthenticatedSindicoDashboardRoute
+  '/sindico/energia': typeof AuthenticatedSindicoEnergiaRoute
   '/sindico/financeiro': typeof AuthenticatedSindicoFinanceiroRoute
   '/sindico/moradores': typeof AuthenticatedSindicoMoradoresRoute
+  '/sindico/onboarding': typeof AuthenticatedSindicoOnboardingRoute
   '/sindico/reservas': typeof AuthenticatedSindicoReservasRoute
 }
 export interface FileRoutesById {
@@ -192,10 +219,13 @@ export interface FileRoutesById {
   '/_authenticated/morador/reservar': typeof AuthenticatedMoradorReservarRoute
   '/_authenticated/morador/reservas': typeof AuthenticatedMoradorReservasRoute
   '/_authenticated/sindico/carregadores': typeof AuthenticatedSindicoCarregadoresRoute
+  '/_authenticated/sindico/compliance': typeof AuthenticatedSindicoComplianceRoute
   '/_authenticated/sindico/configuracoes': typeof AuthenticatedSindicoConfiguracoesRoute
   '/_authenticated/sindico/dashboard': typeof AuthenticatedSindicoDashboardRoute
+  '/_authenticated/sindico/energia': typeof AuthenticatedSindicoEnergiaRoute
   '/_authenticated/sindico/financeiro': typeof AuthenticatedSindicoFinanceiroRoute
   '/_authenticated/sindico/moradores': typeof AuthenticatedSindicoMoradoresRoute
+  '/_authenticated/sindico/onboarding': typeof AuthenticatedSindicoOnboardingRoute
   '/_authenticated/sindico/reservas': typeof AuthenticatedSindicoReservasRoute
 }
 export interface FileRouteTypes {
@@ -214,10 +244,13 @@ export interface FileRouteTypes {
     | '/morador/reservar'
     | '/morador/reservas'
     | '/sindico/carregadores'
+    | '/sindico/compliance'
     | '/sindico/configuracoes'
     | '/sindico/dashboard'
+    | '/sindico/energia'
     | '/sindico/financeiro'
     | '/sindico/moradores'
+    | '/sindico/onboarding'
     | '/sindico/reservas'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -234,10 +267,13 @@ export interface FileRouteTypes {
     | '/morador/reservar'
     | '/morador/reservas'
     | '/sindico/carregadores'
+    | '/sindico/compliance'
     | '/sindico/configuracoes'
     | '/sindico/dashboard'
+    | '/sindico/energia'
     | '/sindico/financeiro'
     | '/sindico/moradores'
+    | '/sindico/onboarding'
     | '/sindico/reservas'
   id:
     | '__root__'
@@ -255,10 +291,13 @@ export interface FileRouteTypes {
     | '/_authenticated/morador/reservar'
     | '/_authenticated/morador/reservas'
     | '/_authenticated/sindico/carregadores'
+    | '/_authenticated/sindico/compliance'
     | '/_authenticated/sindico/configuracoes'
     | '/_authenticated/sindico/dashboard'
+    | '/_authenticated/sindico/energia'
     | '/_authenticated/sindico/financeiro'
     | '/_authenticated/sindico/moradores'
+    | '/_authenticated/sindico/onboarding'
     | '/_authenticated/sindico/reservas'
   fileRoutesById: FileRoutesById
 }
@@ -334,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSindicoReservasRouteImport
       parentRoute: typeof AuthenticatedSindicoRoute
     }
+    '/_authenticated/sindico/onboarding': {
+      id: '/_authenticated/sindico/onboarding'
+      path: '/onboarding'
+      fullPath: '/sindico/onboarding'
+      preLoaderRoute: typeof AuthenticatedSindicoOnboardingRouteImport
+      parentRoute: typeof AuthenticatedSindicoRoute
+    }
     '/_authenticated/sindico/moradores': {
       id: '/_authenticated/sindico/moradores'
       path: '/moradores'
@@ -348,6 +394,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSindicoFinanceiroRouteImport
       parentRoute: typeof AuthenticatedSindicoRoute
     }
+    '/_authenticated/sindico/energia': {
+      id: '/_authenticated/sindico/energia'
+      path: '/energia'
+      fullPath: '/sindico/energia'
+      preLoaderRoute: typeof AuthenticatedSindicoEnergiaRouteImport
+      parentRoute: typeof AuthenticatedSindicoRoute
+    }
     '/_authenticated/sindico/dashboard': {
       id: '/_authenticated/sindico/dashboard'
       path: '/dashboard'
@@ -360,6 +413,13 @@ declare module '@tanstack/react-router' {
       path: '/configuracoes'
       fullPath: '/sindico/configuracoes'
       preLoaderRoute: typeof AuthenticatedSindicoConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedSindicoRoute
+    }
+    '/_authenticated/sindico/compliance': {
+      id: '/_authenticated/sindico/compliance'
+      path: '/compliance'
+      fullPath: '/sindico/compliance'
+      preLoaderRoute: typeof AuthenticatedSindicoComplianceRouteImport
       parentRoute: typeof AuthenticatedSindicoRoute
     }
     '/_authenticated/sindico/carregadores': {
@@ -428,20 +488,26 @@ const AuthenticatedMoradorRouteWithChildren =
 
 interface AuthenticatedSindicoRouteChildren {
   AuthenticatedSindicoCarregadoresRoute: typeof AuthenticatedSindicoCarregadoresRoute
+  AuthenticatedSindicoComplianceRoute: typeof AuthenticatedSindicoComplianceRoute
   AuthenticatedSindicoConfiguracoesRoute: typeof AuthenticatedSindicoConfiguracoesRoute
   AuthenticatedSindicoDashboardRoute: typeof AuthenticatedSindicoDashboardRoute
+  AuthenticatedSindicoEnergiaRoute: typeof AuthenticatedSindicoEnergiaRoute
   AuthenticatedSindicoFinanceiroRoute: typeof AuthenticatedSindicoFinanceiroRoute
   AuthenticatedSindicoMoradoresRoute: typeof AuthenticatedSindicoMoradoresRoute
+  AuthenticatedSindicoOnboardingRoute: typeof AuthenticatedSindicoOnboardingRoute
   AuthenticatedSindicoReservasRoute: typeof AuthenticatedSindicoReservasRoute
 }
 
 const AuthenticatedSindicoRouteChildren: AuthenticatedSindicoRouteChildren = {
   AuthenticatedSindicoCarregadoresRoute: AuthenticatedSindicoCarregadoresRoute,
+  AuthenticatedSindicoComplianceRoute: AuthenticatedSindicoComplianceRoute,
   AuthenticatedSindicoConfiguracoesRoute:
     AuthenticatedSindicoConfiguracoesRoute,
   AuthenticatedSindicoDashboardRoute: AuthenticatedSindicoDashboardRoute,
+  AuthenticatedSindicoEnergiaRoute: AuthenticatedSindicoEnergiaRoute,
   AuthenticatedSindicoFinanceiroRoute: AuthenticatedSindicoFinanceiroRoute,
   AuthenticatedSindicoMoradoresRoute: AuthenticatedSindicoMoradoresRoute,
+  AuthenticatedSindicoOnboardingRoute: AuthenticatedSindicoOnboardingRoute,
   AuthenticatedSindicoReservasRoute: AuthenticatedSindicoReservasRoute,
 }
 
