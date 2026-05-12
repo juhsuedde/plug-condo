@@ -1,0 +1,19 @@
+project_id = "kfbctthtanxtbqebuwmp"
+
+[functions.process-queue]
+verify_jwt = false
+
+[functions.calculate-reservation-cost]
+verify_jwt = false
+
+[functions.check-reservation-grace-period]
+verify_jwt = false
+
+[functions.confirm-queue-reservation]
+verify_jwt = true
+
+[functions.create-pix-payment]
+verify_jwt = true
+
+[functions.mercado-pago-webhook]
+verify_jwt = false
