@@ -1,9 +1,11 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { Home, CalendarPlus, ClipboardList, ListOrdered, User, Clock, XCircle, LogOut } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Home, CalendarPlus, ClipboardList, ListOrdered, User, Clock, XCircle, LogOut, Construction } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
 import { BottomNav } from "@/components/BottomNav";
 import { NotificationsBell } from "@/components/NotificationsBell";
+import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/morador")({
