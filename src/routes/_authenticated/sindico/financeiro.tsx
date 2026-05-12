@@ -17,6 +17,7 @@ export const Route = createFileRoute("/_authenticated/sindico/financeiro")({
 function Page() {
   const { perfil } = useAuth();
   const [period, setPeriod] = useState<Period>("month");
+  const [transferring, setTransferring] = useState(false);
   const condoId = perfil?.condominio_id;
 
   const start = useMemo(() => {
