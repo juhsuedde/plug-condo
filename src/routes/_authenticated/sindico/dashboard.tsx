@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { TrendingUp, Zap, ListOrdered, AlertTriangle } from "lucide-react";
+import { TrendingUp, Zap, ListOrdered, AlertTriangle, Activity, Shield, Sparkles, ChevronRight } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, Cell } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
