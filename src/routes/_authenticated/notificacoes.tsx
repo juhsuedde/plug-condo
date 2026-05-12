@@ -67,7 +67,7 @@ function NotificacoesPage() {
     const query = supabase
       .from("notifications")
       .select("*")
-      .eq("perfil_id", perfil?.id)
+      .eq("perfil_id", perfil?.id ?? "")
       .order("created_at", { ascending: false })
       .limit(100);
 
