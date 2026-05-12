@@ -67,19 +67,25 @@ function Page() {
         <h1 className="text-2xl font-extrabold tracking-tight mt-1">Saúde regulatória</h1>
       </header>
 
-      <section className={`rounded-3xl p-6 shadow-card text-${tone}-foreground bg-${tone}/15 border border-${tone}/30`}>
+  const toneClasses = {
+    success: { bg: "bg-success/15", border: "border-success/30", chip: "bg-success text-success-foreground", solid: "bg-success", text: "text-success", soft: "bg-success/30" },
+    warning: { bg: "bg-warning/15", border: "border-warning/30", chip: "bg-warning text-warning-foreground", solid: "bg-warning", text: "text-warning", soft: "bg-warning/30" },
+    destructive: { bg: "bg-destructive/15", border: "border-destructive/30", chip: "bg-destructive text-destructive-foreground", solid: "bg-destructive", text: "text-destructive", soft: "bg-destructive/30" },
+  }[tone];
+
+      <section className={`rounded-3xl p-6 shadow-card ${toneClasses.bg} border ${toneClasses.border}`}>
         <div className="flex items-center gap-3">
-          <div className={`h-12 w-12 rounded-full bg-${tone}/30 grid place-items-center`}>
-            <Shield className={`text-${tone}`} size={24} />
+          <div className={`h-12 w-12 rounded-full ${toneClasses.soft} grid place-items-center`}>
+            <Shield className={toneClasses.text} size={24} />
           </div>
           <div className="flex-1">
             <div className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Score atual</div>
             <div className="text-3xl font-extrabold text-foreground">{score}<span className="text-base text-muted-foreground">/100</span></div>
           </div>
-          <span className={`px-3 py-1 rounded-full text-xs font-bold bg-${tone} text-${tone}-foreground`}>{toneLabel}</span>
+          <span className={`px-3 py-1 rounded-full text-xs font-bold ${toneClasses.chip}`}>{toneLabel}</span>
         </div>
         <div className="mt-4 h-2 rounded-full bg-card overflow-hidden">
-          <div className={`h-full bg-${tone}`} style={{ width: `${score}%` }} />
+          <div className={`h-full ${toneClasses.solid}`} style={{ width: `${score}%` }} />
         </div>
       </section>
 
