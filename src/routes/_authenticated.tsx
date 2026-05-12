@@ -8,18 +8,34 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function Gate() {
-  const { user, loading } = useAuth();
+  const { user, loading, perfil } = useAuth();
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/" });
+    if (!loading && !user) {
+      navigate({ to: "/" });
+    }
   }, [loading, user, navigate]);
 
-  if (loading || !user) {
+  useEffect(() => {
+    if (!loading && user && perfil) {
+      if (perfil.status_aprovacao === "pendente" || perfil.status_aprovacao === "rejeitado") {
+        navigate({ to: "/pendente" });
+      }
+    }
+  }, [loading, user, perfil, navigate]);
+
+  if (loading || !user || !perfil) {
     return (
       <div className="min-h-screen grid place-items-center bg-surface">
         <Loader2 className="animate-spin text-primary" size={28} />
       </div>
     );
   }
+
+  if (perfil.status_aprovacao === "pendente" || perfil.status_aprovacao === "rejeitado") {
+    return <Outlet />;
+  }
+
   return <Outlet />;
 }
