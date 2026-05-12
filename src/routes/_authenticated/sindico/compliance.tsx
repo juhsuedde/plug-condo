@@ -60,18 +60,18 @@ function Page() {
     toast.success("Relatório gerado");
   };
 
+  const toneClasses = {
+    success: { bg: "bg-success/15", border: "border-success/30", chip: "bg-success text-success-foreground", solid: "bg-success", text: "text-success", soft: "bg-success/30" },
+    warning: { bg: "bg-warning/15", border: "border-warning/30", chip: "bg-warning text-warning-foreground", solid: "bg-warning", text: "text-warning", soft: "bg-warning/30" },
+    destructive: { bg: "bg-destructive/15", border: "border-destructive/30", chip: "bg-destructive text-destructive-foreground", solid: "bg-destructive", text: "text-destructive", soft: "bg-destructive/30" },
+  }[tone];
+
   return (
     <div className="px-5 pt-6 pb-6 space-y-5">
       <header>
         <p className="text-xs uppercase tracking-wider text-primary font-bold">Conformidade</p>
         <h1 className="text-2xl font-extrabold tracking-tight mt-1">Saúde regulatória</h1>
       </header>
-
-  const toneClasses = {
-    success: { bg: "bg-success/15", border: "border-success/30", chip: "bg-success text-success-foreground", solid: "bg-success", text: "text-success", soft: "bg-success/30" },
-    warning: { bg: "bg-warning/15", border: "border-warning/30", chip: "bg-warning text-warning-foreground", solid: "bg-warning", text: "text-warning", soft: "bg-warning/30" },
-    destructive: { bg: "bg-destructive/15", border: "border-destructive/30", chip: "bg-destructive text-destructive-foreground", solid: "bg-destructive", text: "text-destructive", soft: "bg-destructive/30" },
-  }[tone];
 
       <section className={`rounded-3xl p-6 shadow-card ${toneClasses.bg} border ${toneClasses.border}`}>
         <div className="flex items-center gap-3">
