@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedSindicoRouteImport } from './routes/_authenticated/sindico'
+import { Route as AuthenticatedPendenteRouteImport } from './routes/_authenticated/pendente'
 import { Route as AuthenticatedNotificacoesRouteImport } from './routes/_authenticated/notificacoes'
 import { Route as AuthenticatedMoradorRouteImport } from './routes/_authenticated/morador'
 import { Route as AuthenticatedSindicoReservasRouteImport } from './routes/_authenticated/sindico/reservas'
@@ -50,6 +51,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthenticatedSindicoRoute = AuthenticatedSindicoRouteImport.update({
   id: '/sindico',
   path: '/sindico',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPendenteRoute = AuthenticatedPendenteRouteImport.update({
+  id: '/pendente',
+  path: '/pendente',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedNotificacoesRoute =
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/morador': typeof AuthenticatedMoradorRouteWithChildren
   '/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/pendente': typeof AuthenticatedPendenteRoute
   '/sindico': typeof AuthenticatedSindicoRouteWithChildren
   '/morador/fila': typeof AuthenticatedMoradorFilaRoute
   '/morador/home': typeof AuthenticatedMoradorHomeRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/morador': typeof AuthenticatedMoradorRouteWithChildren
   '/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/pendente': typeof AuthenticatedPendenteRoute
   '/sindico': typeof AuthenticatedSindicoRouteWithChildren
   '/morador/fila': typeof AuthenticatedMoradorFilaRoute
   '/morador/home': typeof AuthenticatedMoradorHomeRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/morador': typeof AuthenticatedMoradorRouteWithChildren
   '/_authenticated/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/_authenticated/pendente': typeof AuthenticatedPendenteRoute
   '/_authenticated/sindico': typeof AuthenticatedSindicoRouteWithChildren
   '/_authenticated/morador/fila': typeof AuthenticatedMoradorFilaRoute
   '/_authenticated/morador/home': typeof AuthenticatedMoradorHomeRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/morador'
     | '/notificacoes'
+    | '/pendente'
     | '/sindico'
     | '/morador/fila'
     | '/morador/home'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/morador'
     | '/notificacoes'
+    | '/pendente'
     | '/sindico'
     | '/morador/fila'
     | '/morador/home'
@@ -236,6 +247,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/morador'
     | '/_authenticated/notificacoes'
+    | '/_authenticated/pendente'
     | '/_authenticated/sindico'
     | '/_authenticated/morador/fila'
     | '/_authenticated/morador/home'
@@ -292,6 +304,13 @@ declare module '@tanstack/react-router' {
       path: '/sindico'
       fullPath: '/sindico'
       preLoaderRoute: typeof AuthenticatedSindicoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pendente': {
+      id: '/_authenticated/pendente'
+      path: '/pendente'
+      fullPath: '/pendente'
+      preLoaderRoute: typeof AuthenticatedPendenteRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/notificacoes': {
@@ -432,12 +451,14 @@ const AuthenticatedSindicoRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedMoradorRoute: typeof AuthenticatedMoradorRouteWithChildren
   AuthenticatedNotificacoesRoute: typeof AuthenticatedNotificacoesRoute
+  AuthenticatedPendenteRoute: typeof AuthenticatedPendenteRoute
   AuthenticatedSindicoRoute: typeof AuthenticatedSindicoRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedMoradorRoute: AuthenticatedMoradorRouteWithChildren,
   AuthenticatedNotificacoesRoute: AuthenticatedNotificacoesRoute,
+  AuthenticatedPendenteRoute: AuthenticatedPendenteRoute,
   AuthenticatedSindicoRoute: AuthenticatedSindicoRouteWithChildren,
 }
 
@@ -454,3 +475,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
