@@ -15,13 +15,13 @@ React 19 + TypeScript + Supabase app for EV charging management in Brazilian con
 - **State**: TanStack Query + React Query; `useAuth` provides `user`, `perfil`, `loading`
 - **Supabase Client**: `src/integrations/supabase/client.ts`
 
-## Env Variables Required
+## Env Variables (see .env file)
 ```
-VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-MERCADO_PAGO_ACCESS_TOKEN
-MERCADO_PAGO_WEBHOOK_SECRET
+VITE_SUPABASE_URL=https://kfbctthtanxtbqebuwmp.supabase.co
+VITE_SUPABASE_ANON_KEY=<from Supabase Dashboard>
+SUPABASE_SERVICE_ROLE_KEY=<from Supabase Dashboard>
+MERCADO_PAGO_ACCESS_TOKEN=<from Mercado Pago Dashboard>
+MERCADO_PAGO_WEBHOOK_SECRET=<from Mercado Pago Dashboard>
 ```
 
 ## Edge Functions (Deno)
