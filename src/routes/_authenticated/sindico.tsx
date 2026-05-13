@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { LayoutDashboard, Plug, Users, CalendarDays, BarChart3, UserCheck, Settings, Shield } from "lucide-react";
+import { LayoutDashboard, Plug, Users, CalendarDays, BarChart3, UserCheck, Settings, Shield, LogOut } from "lucide-react";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { MobileFrame } from "@/components/MobileFrame";
 import { BottomNav } from "@/components/BottomNav";
