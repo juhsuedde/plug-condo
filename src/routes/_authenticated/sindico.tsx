@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_authenticated/sindico")({
 });
 
 function SindicoLayout() {
-  const { perfil, loading } = useAuth();
+  const { perfil, loading, signOut } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     if (!loading && perfil && perfil.role !== "sindico") {
