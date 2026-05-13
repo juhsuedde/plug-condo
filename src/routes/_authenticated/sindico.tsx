@@ -57,6 +57,13 @@ function SindicoLayout() {
             )}
           </Link>
           <NotificationsBell />
+          <button
+            onClick={async () => { await signOut(); navigate({ to: "/" }); }}
+            className="h-10 w-10 rounded-full bg-card shadow-soft grid place-items-center text-destructive"
+            aria-label="Sair"
+          >
+            <LogOut size={18} />
+          </button>
         </div>
       </header>
       <div className="flex-1 overflow-y-auto pb-2">
