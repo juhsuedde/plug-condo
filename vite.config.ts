@@ -10,11 +10,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 export default defineConfig({
   tanstackStart: {
-    server: { entry: "server" },
+    server: { preset: "vercel" },
   },
   vite: {
     server: {
       port: 3000,
     },
+    plugins: [import("nitro/vite").then((m) => m.nitro())],
   },
 });
