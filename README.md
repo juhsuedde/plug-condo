@@ -1,8 +1,3 @@
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="" />
-    <img alt="PlugCondo" src="" width="120" />
-  </picture>
   <h1>PlugCondo</h1>
   <p>Gestão inteligente de recarga de veículos elétricos para condomínios</p>
 </div>
